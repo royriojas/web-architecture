@@ -1,0 +1,7 @@
+{
+  "name": "web-architecture",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Roy Riojas <rriojas@rivian.com>",
+  "license": "MIT"
+}
