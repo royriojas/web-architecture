@@ -3,11 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/runtime": "^7.12.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "@typescript-eslint/parser": "^4.4.1",
     "mobx": "^6.0.1",
+    "mobx-form": "10.0.5",
     "mobx-react-lite": "^3.0.0",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",

@@ -27,4 +27,9 @@ export class Counter {
   get max() {
     return this._max;
   }
+
+  get countProp() {
+    console.log('>>> called', this.count);
+    return { double: this.count * 2 };
+  }
 }

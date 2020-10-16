@@ -10,6 +10,8 @@ const stores: Stores = {
   counter: new Counter(),
 };
 
+(window as any).__stores = stores;
+
 ReactDOM.render(
   <React.StrictMode>
     <StoresContext.Provider value={stores}>

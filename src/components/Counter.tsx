@@ -12,9 +12,11 @@ export const Counter = () => {
           <>
             <p>Count:</p>
             <p>{counter.count}</p>
+            <p>Double:</p>
+            <p>{counter.countProp.double}</p>
             <hr />
-            <button onClick={counter.increment}>increment</button>
-            <button onClick={counter.decrement}>decrement</button>
+            <button onClick={counter.decrement}>Decrement (-)</button>
+            <button onClick={counter.increment}>Increment (+)</button>
           </>
         )}
       </Observer>
