@@ -2,6 +2,7 @@ import React, { useCallback, useState } from "react";
 import { Observer } from "mobx-react-lite";
 import { createLoginModel, LoginModel } from "../mobx/models/login-model";
 import { IField } from "mobx-form";
+import { useStores } from "../mobx/use-stores";
 
 export type FormFieldProps = {
   field: IField<string>;
@@ -37,6 +38,7 @@ export const FormField: React.FC<FormFieldProps> = ({
 };
 
 export const LoginForm: React.FC = () => {
+  const { auth } = useStores();
   const [loginModel] = useState<LoginModel>(() =>
     createLoginModel({ email: "", password: "" })
   );
@@ -45,26 +47,31 @@ export const LoginForm: React.FC = () => {
     await loginModel.validate();
     const isValid = loginModel.valid;
 
-    console.log(">>> log.valid", isValid);
+    if (isValid) {
+      const { serializedData } = loginModel;
+      auth.login(serializedData.email, serializedData.password);
+    }
   }, [loginModel]);
 
   return (
     <div>
-      <FormField field={loginModel.fields.email} type="text" label="email" />
-      <FormField
-        field={loginModel.fields.password}
-        type="password"
-        label="password"
-      />
-      <button onClick={submit}>Login</button>
+      {!auth.authenticated && (
+        <div>
+          <FormField
+            field={loginModel.fields.email}
+            type="text"
+            label="email"
+          />
+          <FormField
+            field={loginModel.fields.password}
+            type="password"
+            label="password"
+          />
+          <button onClick={submit}>Login</button>
+        </div>
+      )}
+      {auth.authenticated && <div>Welcome {auth.user.name}</div>}
       <hr />
-      <pre>
-        <code>
-          <Observer>
-            {() => <>{JSON.stringify(loginModel.serializedData, null, 2)}</>}
-          </Observer>
-        </code>
-      </pre>
     </div>
   );
 };
