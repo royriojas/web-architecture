@@ -30,11 +30,19 @@ export class Auth {
     await this.rq.execCall({ email, password });
   };
 
+  logout = async () => {
+    this.rq.clearResponse();
+  };
+
   get loginInProgress() {
     return this.rq.loading;
   }
 
   get loginSuccess() {
     return this.rq.success;
+  }
+
+  get loginError() {
+    return this.rq.error?.message;
   }
 }
