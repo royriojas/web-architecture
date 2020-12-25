@@ -1,25 +1,32 @@
 import { Observer } from 'mobx-react-lite';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
-import { Counter } from './components/Counter';
-import { LoginForm } from './components/LoginForm';
-import { useStores } from './mobx/use-stores';
 
-function App() {
-  const { auth } = useStores();
+const Counter = () => {
+  const [count, setCount] = useState(0);
 
+  useEffect(() => {
+    console.log('mount');
+    const id = setInterval(() => {
+      setCount(count => count + 1);
+    }, 1000);
+
+    return () => {
+      console.log("unmount");
+      clearInterval(id);
+    };
+  }, []);
+
+  return <p>count: {count}</p>;
+};
+
+export default function App() {
+  const [mounted, setMounted] = useState(false);
   return (
     <div className="App">
-      <LoginForm />
-      <Observer>
-        {() => {
-          return <>
-            {auth.authenticated && <Counter />}
-          </>
-        }}
-      </Observer>
+      <h1>Click to mount</h1>
+      <button onClick={() => setMounted(mounted_ => !mounted_)}>{!mounted ? 'Mount it!' : 'Unmount it!'}</button>
+      {mounted && <Counter />}
     </div>
   );
 }
-
-export default App;
