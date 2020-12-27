@@ -1,32 +1,33 @@
-import { Observer } from 'mobx-react-lite';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './App.css';
 
-const Counter = () => {
-  const [count, setCount] = useState(0);
+import { Step1 } from './Step1';
+import { Step2 } from './Step2';
 
-  useEffect(() => {
-    console.log('mount');
-    const id = setInterval(() => {
-      setCount(count => count + 1);
-    }, 1000);
-
-    return () => {
-      console.log("unmount");
-      clearInterval(id);
-    };
-  }, []);
-
-  return <p>count: {count}</p>;
-};
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from 'react-router-dom';
 
 export default function App() {
-  const [mounted, setMounted] = useState(false);
+
   return (
-    <div className="App">
-      <h1>Click to mount</h1>
-      <button onClick={() => setMounted(mounted_ => !mounted_)}>{!mounted ? 'Mount it!' : 'Unmount it!'}</button>
-      {mounted && <Counter />}
-    </div>
+    <Router>
+      <div>
+      <Switch>
+        <Route path="/step1">
+          <Step1 />
+        </Route>
+        <Route path="/step2">
+          <Step2 />
+        </Route>
+        <Route path="/">
+          <Redirect to="/step1" />
+        </Route>
+      </Switch>
+      </div>
+    </Router>
   );
 }
